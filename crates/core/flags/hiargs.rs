@@ -625,6 +625,7 @@ impl HiArgs {
             .byte_offset(self.byte_offset)
             .color_specs(self.colors.clone())
             .column(self.column)
+            .end_column(self.vimgrep)
             .heading(self.heading)
             .hyperlink(self.hyperlink_config.clone())
             .max_columns_preview(self.max_columns_preview)
