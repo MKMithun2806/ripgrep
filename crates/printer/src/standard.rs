@@ -1015,7 +1015,7 @@ impl<'a, M: Matcher, W: WriteColor> StandardImpl<'a, M, W> {
                     self.sunk.absolute_byte_offset() + m.start() as u64,
                     self.sunk.line_number(),
                     Some(m.start() as u64 + 1),
-                    Some(m.end() as u64),
+                    Some(m.end() as u64 + 1),
                 )?;
 
                 let buf = &self.sunk.bytes()[m];
@@ -1027,7 +1027,7 @@ impl<'a, M: Matcher, W: WriteColor> StandardImpl<'a, M, W> {
                     self.sunk.absolute_byte_offset() + m.start() as u64,
                     self.sunk.line_number(),
                     Some(m.start() as u64 + 1),
-                    Some(m.end() as u64),
+                    Some(m.end() as u64 + 1),
                 )?;
                 self.write_colored_line(&[m], self.sunk.bytes())?;
             }
@@ -1036,7 +1036,7 @@ impl<'a, M: Matcher, W: WriteColor> StandardImpl<'a, M, W> {
                 self.sunk.absolute_byte_offset(),
                 self.sunk.line_number(),
                 Some(self.sunk.matches()[0].start() as u64 + 1),
-                Some(self.sunk.matches()[0].end() as u64),
+                Some(self.sunk.matches()[0].end() as u64 + 1),
             )?;
             self.write_colored_line(self.sunk.matches(), self.sunk.bytes())?;
         }
@@ -1065,7 +1065,7 @@ impl<'a, M: Matcher, W: WriteColor> StandardImpl<'a, M, W> {
                 self.sunk.absolute_byte_offset() + line.start() as u64,
                 self.sunk.line_number().map(|n| n + count),
                 Some(matches[0].start() as u64 + 1),
-                Some(matches[0].end() as u64),
+                Some(matches[0].end() as u64 + 1),
             )?;
             count += 1;
             self.trim_ascii_prefix(bytes, &mut line);
@@ -1111,7 +1111,7 @@ impl<'a, M: Matcher, W: WriteColor> StandardImpl<'a, M, W> {
                         self.sunk.absolute_byte_offset() + m.start() as u64,
                         self.sunk.line_number().map(|n| n + count),
                         Some(m.start() as u64 + 1),
-                        Some(m.end() as u64),
+                        Some(m.end() as u64 + 1),
                     )?;
 
                     let this_line = line.with_end(upto);
@@ -1150,7 +1150,7 @@ impl<'a, M: Matcher, W: WriteColor> StandardImpl<'a, M, W> {
                     self.sunk.absolute_byte_offset() + line.start() as u64,
                     self.sunk.line_number().map(|n| n + count),
                     Some(m.start().saturating_sub(line.start()) as u64 + 1),
-                    Some(m.end().saturating_sub(line.start()) as u64),
+                    Some(m.end().saturating_sub(line.start()) as u64 + 1),
                 )?;
                 count += 1;
                 self.trim_line_terminator(bytes, &mut line);
@@ -2443,8 +2443,8 @@ Watson
 
         let got = printer_contents(&mut printer);
         let expected = "\
-16:21:For the Doctor Watsons of this world, as opposed to the Sherlock
-12:17:but Doctor Watson has to have it taken out for him and dusted,
+16:22:For the Doctor Watsons of this world, as opposed to the Sherlock
+12:18:but Doctor Watson has to have it taken out for him and dusted,
 ";
         assert_eq_printed!(expected, got);
     }
@@ -2470,10 +2470,10 @@ Watson
 
         let got = printer_contents(&mut printer);
         let expected = "\
-1:16:21:For the Doctor Watsons of this world, as opposed to the Sherlock
-1:57:64:For the Doctor Watsons of this world, as opposed to the Sherlock
-3:49:56:be, to a very large extent, the result of luck. Sherlock Holmes
-5:12:17:but Doctor Watson has to have it taken out for him and dusted,
+1:16:22:For the Doctor Watsons of this world, as opposed to the Sherlock
+1:57:65:For the Doctor Watsons of this world, as opposed to the Sherlock
+3:49:57:be, to a very large extent, the result of luck. Sherlock Holmes
+5:12:18:but Doctor Watson has to have it taken out for him and dusted,
 ";
         assert_eq_printed!(expected, got);
     }
