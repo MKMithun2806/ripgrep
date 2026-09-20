@@ -1725,7 +1725,10 @@ impl<'a, M: Matcher, W: WriteColor> PreludeWriter<'a, M, W> {
 
     /// Writes the end column number field if present and configured to do so.
     #[inline(always)]
-    fn write_end_column_number(&mut self, column: Option<u64>) -> io::Result<()> {
+    fn write_end_column_number(
+        &mut self,
+        column: Option<u64>,
+    ) -> io::Result<()> {
         if !self.config().end_column {
             return Ok(());
         }

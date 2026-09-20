@@ -908,23 +908,18 @@ sherlock:but Doctor Watson has to have it taken out for him and dusted,
 
 // Regression test: --vimgrep --no-column suppresses both column and end column
 // (without -N, so line numbers are still present).
-rgtest!(
-    vimgrep_no_column_with_lineno,
-    |dir: Dir, mut cmd: TestCommand| {
-        dir.create("sherlock", SHERLOCK);
-        cmd.arg("--vimgrep")
-            .arg("--no-column")
-            .arg("Sherlock|Watson");
+rgtest!(vimgrep_no_column_with_lineno, |dir: Dir, mut cmd: TestCommand| {
+    dir.create("sherlock", SHERLOCK);
+    cmd.arg("--vimgrep").arg("--no-column").arg("Sherlock|Watson");
 
-        let expected = "\
+    let expected = "\
 sherlock:1:For the Doctor Watsons of this world, as opposed to the Sherlock
 sherlock:1:For the Doctor Watsons of this world, as opposed to the Sherlock
 sherlock:3:be, to a very large extent, the result of luck. Sherlock Holmes
 sherlock:5:but Doctor Watson has to have it taken out for him and dusted,
 ";
-        eqnice!(expected, cmd.stdout());
-    }
-);
+    eqnice!(expected, cmd.stdout());
+});
 
 rgtest!(preprocessing, |dir: Dir, mut cmd: TestCommand| {
     if !cmd_exists("xzcat") {

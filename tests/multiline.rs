@@ -90,16 +90,13 @@ sherlock:5:12:18:but Doctor Watson has to have it taken out for him and dusted,
 
 // Regression test: multiline vimgrep end-column reflects the match end byte
 // relative to the line start for the first line of the match.
-rgtest!(
-    vimgrep_endcol_multiline,
-    |dir: Dir, mut cmd: TestCommand| {
-        dir.create("data", "abc\ndef\nghi");
-        cmd.args(&["-n", "-U", "--vimgrep", r"abc\ndef", "data"]);
+rgtest!(vimgrep_endcol_multiline, |dir: Dir, mut cmd: TestCommand| {
+    dir.create("data", "abc\ndef\nghi");
+    cmd.args(&["-n", "-U", "--vimgrep", r"abc\ndef", "data"]);
 
-        let expected = "data:1:1:8:abc\n";
-        eqnice!(expected, cmd.stdout());
-    }
-);
+    let expected = "data:1:1:8:abc\n";
+    eqnice!(expected, cmd.stdout());
+});
 
 // Tests that multiline search works when reading from stdin. This is an
 // important test because multiline search must read the entire contents of
